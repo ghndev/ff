@@ -11,7 +11,7 @@ import { Search } from 'lucide-react'
 
 export default function SearchBar() {
   return (
-    <div className="relative items-center hidden md:flex pr-12 w-80 h-10">
+    <div className="relative items-center hidden lg:flex pr-12 w-80 h-10">
       <div className="absolute flex left-0 top-0 w-full">
         <Select defaultValue="all">
           <SelectTrigger className="w-fit rounded-r-none space-x-2 bg-shadow border-none focus:ring-offset-0 text-custom-gray">
