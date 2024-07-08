@@ -4,6 +4,9 @@ import SearchBar from './search-bar'
 import { Bookmark } from 'lucide-react'
 import { auth } from '@clerk/nextjs/server'
 import { UserButton } from '@clerk/nextjs'
+import { Leckerli_One } from 'next/font/google'
+
+const leckerliOne = Leckerli_One({ weight: ['400'], subsets: ['latin'] })
 
 export default function Navbar() {
   const { userId } = auth()
@@ -13,7 +16,9 @@ export default function Navbar() {
       <MaxWidthWrapper>
         <div className="flex items-center justify-between h-full">
           <Link href="/" className="text-white font-semibold text-xl">
-            Flick<span className="text-blue-400">Focus</span>
+            Flic
+            <span className={`${leckerliOne.className} text-blue-400`}>F</span>
+            <span className="text-blue-400">ocus</span>
           </Link>
 
           <div className="hidden lg:flex items-center space-x-7 text-custom-gray">
