@@ -23,7 +23,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <Navbar />
 
-          <main className="min-h-[calc(100vh-4rem)] bg-[#0E0E0E]">
+          <main className="flex flex-col min-h-[calc(100vh-4rem)] bg-[#0E0E0E]">
             {children}
           </main>
           <Footer />

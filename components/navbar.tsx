@@ -12,7 +12,7 @@ export default function Navbar() {
   const { userId } = auth()
 
   return (
-    <div className="bg-dark h-16">
+    <nav className="bg-dark h-16">
       <MaxWidthWrapper>
         <div className="flex items-center justify-between h-full">
           <Link href="/" className="text-white font-semibold text-xl">
@@ -75,6 +75,6 @@ export default function Navbar() {
           </div>
         </div>
       </MaxWidthWrapper>
-    </div>
+    </nav>
   )
 }
