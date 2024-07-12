@@ -21,7 +21,7 @@ export default function Navbar() {
             <span className="text-blue-400">ocus</span>
           </Link>
 
-          <div className="hidden lg:flex items-center space-x-7 text-custom-gray">
+          <div className="hidden lg:flex items-center space-x-7 text-custom-gray-300">
             <Link href="/movies">Movies</Link>
             <Link href="/tv">TV Shows</Link>
             <Link href="/trailers">Trailers</Link>
@@ -32,8 +32,8 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             <Link
               href="watchlist"
-              className="flex text-custom-gray items-center">
-              <Bookmark className="h-6 w-6 fill-custom-gray mr-1" />
+              className="flex text-custom-gray-300 items-center">
+              <Bookmark className="h-6 w-6 fill-custom-gray-300 mr-1" />
               <p className="hidden md:block">Watchlist</p>
             </Link>
 
@@ -42,7 +42,7 @@ export default function Navbar() {
             ) : (
               <Link
                 href="sign-in"
-                className="text-custom-gray flex items-center">
+                className="text-custom-gray-300 flex items-center">
                 <svg
                   width="24"
                   height="25"

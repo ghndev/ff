@@ -7,8 +7,12 @@ interface PosterProps {
 
 export default function Poster({ imgSrc, className }: PosterProps) {
   return (
-    <div className={cn('w-48 h-fit', className)}>
-      <img src={imgSrc} alt="poster" className="w-full rounded-md shadow-2xl" />
+    <div className={cn('relative w-48 h-60 cursor-pointer', className)}>
+      <img
+        src={imgSrc}
+        alt="poster"
+        className="rounded-md shadow-2xl object-cover"
+      />
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center justify-center">
-            <div className="flex space-x-8 text-custom-gray">
+            <div className="flex space-x-8 text-custom-gray-300">
               <Link href="#" className="text-sm">
                 Terms
               </Link>

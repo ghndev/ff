@@ -14,10 +14,10 @@ export default function SearchBar() {
     <div className="relative items-center hidden lg:flex pr-12 w-80 h-10">
       <div className="absolute flex left-0 top-0 w-full">
         <Select defaultValue="all">
-          <SelectTrigger className="w-fit rounded-r-none space-x-2 bg-shadow border-none focus:ring-offset-0 text-custom-gray">
+          <SelectTrigger className="w-fit rounded-r-none space-x-2 bg-shadow border-none focus:ring-offset-0 text-custom-gray-300">
             <SelectValue placeholder="All" className="text-xl" />
           </SelectTrigger>
-          <SelectContent className="bg-shadow text-custom-gray border-none">
+          <SelectContent className="bg-shadow text-custom-gray-300 border-none">
             <SelectItem value="all">All</SelectItem>
             <SelectItem value="movies">Movies</SelectItem>
             <SelectItem value="tvshows">
@@ -27,9 +27,9 @@ export default function SearchBar() {
         </Select>
         <Input
           placeholder="Search FlickFocus"
-          className="rounded-none border-none bg-shadow focus-visible:ring-offset-0 focus-visible:ring-0 text-custom-gray"
+          className="rounded-none border-none bg-shadow focus-visible:ring-offset-0 focus-visible:ring-0 text-custom-gray-300"
         />
-        <Button className="bg-shadow rounded-l-none text-custom-gray pr-6">
+        <Button className="bg-shadow rounded-l-none text-custom-gray-300 pr-6">
           <Search className="h-5 w-5" />
         </Button>
       </div>

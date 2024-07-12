@@ -24,7 +24,8 @@ const config = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        'custom-gray': '#C3C3C3',
+        'custom-gray-300': '#C3C3C3',
+        'custom-gray-400': '#A3A3A3',
         shadow: '#1A1A1A',
         dark: '#080808',
         primary: {
