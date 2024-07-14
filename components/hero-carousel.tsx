@@ -9,6 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious
 } from './ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
+import Fade from 'embla-carousel-fade'
 
 const MOVIES = [
   {
@@ -33,14 +35,16 @@ const MOVIES = [
 
 export default function HeroCarousel() {
   return (
-    <Carousel className="relative">
+    <Carousel
+      plugins={[Autoplay({ delay: 10000 }), Fade()]}
+      className="relative">
       <CarouselContent className="overflow-visible">
         {MOVIES.map((movie, index) => (
           <CarouselItem key={index} className="relative">
             <img
               src={movie.backgroundSrc}
               alt="background"
-              className="rounded-md h-[20rem] md:h-[30rem] object-cover [mask:linear-gradient(to_top,_transparent_0%,_#0E0E0E_30%)] select-none"
+              className="rounded-md w-[46.875rem] h-[20rem] md:h-[30rem] object-cover [mask:linear-gradient(to_top,_transparent_0%,_#0E0E0E_30%)] select-none"
             />
             <Poster
               imgSrc={movie.posterSrc}
