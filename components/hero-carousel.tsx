@@ -55,8 +55,8 @@ export default function HeroCarousel() {
                 <Play className="h-8 w-8 text-custom-gray-300 fill-custom-gray-300" />
               </div>
               <div>
-                <p className="text-white text-sm md:text-2xl">{movie.title}</p>
-                <p className="md:text-lg text-sm text-custom-gray-400/60">
+                <p className="text-white text-sm xl:text-2xl">{movie.title}</p>
+                <p className="xl:text-lg text-sm text-custom-gray-400/60">
                   {movie.description}
                 </p>
               </div>

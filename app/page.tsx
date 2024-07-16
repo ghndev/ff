@@ -1,9 +1,12 @@
 import HeroCarousel from '@/components/hero-carousel'
 import MaxWidthWrapper from '@/components/max-width-wrapper'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
+import { TMDB_API_KEY, TMDB_BASE_URL } from '@/lib/tmdb'
 import { cn } from '@/lib/utils'
-import { ChevronRight, Play } from 'lucide-react'
+import { ArrowRight, ChevronRight, Play } from 'lucide-react'
 import Link from 'next/link'
+import { unstable_cache as nextCache } from 'next/cache'
+import MovieCarousel from '@/components/movie-carousel'
 
 const VIDEOS = [
   {
@@ -27,7 +30,25 @@ const VIDEOS = [
   }
 ]
 
-export default function Home() {
+async function getLatestMovies() {
+  const res = await fetch(
+    `${TMDB_BASE_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&language=en-US&page=1`,
+    { next: { revalidate: 3600 } }
+  )
+
+  if (!res.ok) throw new Error('Failed to fetch top picks')
+
+  const data = await res.json()
+  return data.results.slice(0, 10)
+}
+
+const getCachedLatestMovies = nextCache(getLatestMovies, ['latest-movies'], {
+  tags: ['latest-movies'],
+  revalidate: 3600
+})
+
+export default async function Home() {
+  const latestMovies = await getCachedLatestMovies()
   return (
     <div className="flex flex-col">
       <section>
@@ -37,7 +58,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col mt-2 md:mt-0 md:pl-5 lg:pl-10">
             <div className="flex justify-between">
-              <div className="flex items-center gap-x-2 text-white text-sm">
+              <div className="flex items-center gap-x-2 text-white text-sm pl-3">
                 <div className="h-1.5 w-1.5 bg-blue-400 rounded-full" />{' '}
                 Featured Videos
               </div>
@@ -84,6 +105,23 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </MaxWidthWrapper>
+      </section>
+      <section>
+        <MaxWidthWrapper className="py-5">
+          <div className="flex flex-col gap-1 py-5">
+            <Link
+              href="/movies"
+              className="flex items-center gap-x-2 text-custom-gray-300">
+              <div className="ml-2 h-1 w-1 bg-blue-400 rounded-full" />
+              <p className="text-2xl">Latest Movies</p>
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <p className="text-[#797979] text-sm pl-2">
+              Fresh from the big screen, straight to you
+            </p>
+          </div>
+          <MovieCarousel movies={latestMovies} />
         </MaxWidthWrapper>
       </section>
     </div>
