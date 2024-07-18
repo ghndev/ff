@@ -30,7 +30,7 @@ export default function Poster({ imgSrc, className }: PosterProps) {
       <img
         src={imgSrc}
         alt="poster"
-        className="rounded-md shadow-2xl object-cover"
+        className="rounded-md shadow-2xl object-cover w-full h-full"
       />
     </div>
   )

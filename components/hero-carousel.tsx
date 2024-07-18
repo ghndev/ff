@@ -44,11 +44,11 @@ export default function HeroCarousel() {
             <img
               src={movie.backgroundSrc}
               alt="background"
-              className="rounded-md w-[46.875rem] h-[20rem] md:h-[30rem] object-cover [mask:linear-gradient(to_top,_transparent_0%,_#0E0E0E_30%)] select-none"
+              className="rounded-md w-[46.875rem] h-80 md:h-[30rem] object-cover [mask:linear-gradient(to_top,_transparent_0%,_#0E0E0E_30%)] select-none"
             />
             <Poster
               imgSrc={movie.posterSrc}
-              className="absolute -bottom-20 start-7 md:-bottom-10 select-none w-32 h-52 md:w-48 md:h-60"
+              className="absolute -bottom-14 start-7 md:-bottom-[5.5rem] select-none w-32 h-48 md:w-48 md:h-[18rem]"
             />
             <div className="absolute md:start-60 start-44 flex flex-col md:flex-row items-start h-fit -bottom-14 md:-bottom-20 space-y-2 md:space-x-4 md:items-end">
               <div className="flex items-center justify-center rounded-full shadow bg-custom-gray-400/60 p-5 md:p-8 cursor-pointer transition-all duration-300 hover:scale-110">
