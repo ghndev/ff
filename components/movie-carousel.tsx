@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils'
 import { buttonVariants } from './ui/button'
 
 interface Movie {
+  id: number
   title: string
   original_name: string
   poster_path: string
@@ -19,9 +20,10 @@ interface Movie {
 
 interface MovieCarouselProps {
   movies: Movie[]
+  type: 'movie' | 'tv'
 }
 
-export default function MovieCarousel({ movies }: MovieCarouselProps) {
+export default function MovieCarousel({ movies, type }: MovieCarouselProps) {
   return (
     <Carousel
       opts={{
@@ -53,7 +55,7 @@ export default function MovieCarousel({ movies }: MovieCarouselProps) {
                 <Info className="h-5 w-5 fill-custom-gray-300" />
               </div>
               <Link
-                href="/trailers"
+                href={`/video/${movie.id}?type=${type}`}
                 className={cn(
                   buttonVariants(),
                   'bg-custom-gray-400/5 text-custom-gray-300 w-full mt-5'

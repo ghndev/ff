@@ -45,20 +45,20 @@ export const getCachedPopularTVShows = nextCache(
   }
 )
 
-async function getMovieDetails(id: number, type: string) {
+async function getDetails(id: number, type: string) {
   const res = await fetch(
     `${TMDB_BASE_URL}/${type}/${id}?api_key=${TMDB_API_KEY}&language=en-US&append_to_response=videos,images`,
     { next: { revalidate: 3600 } }
   )
 
-  if (!res.ok) throw new Error('Failed to fetch movie details')
+  if (!res.ok) throw new Error('Failed to fetch details')
 
   const data = await res.json()
   return data
 }
 
-export const getCachedMovieDetails = nextCache(
-  (id: number, type: string) => getMovieDetails(id, type),
+export const getCachedDetails = nextCache(
+  (id: number, type: string) => getDetails(id, type),
   ['movie-details'],
   {
     tags: ['movie-details'],

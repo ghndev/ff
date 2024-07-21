@@ -72,7 +72,9 @@ export default function VideoDetails({
             {title} <span className="text-xs text-[#797979]">({year})</span>
           </p>
         </div>
-        <Button disabled className="bg-blue-500 hover:bg-blue-500/90 text-sm">
+        <Button
+          disabled
+          className="hidden sm:block bg-blue-500 hover:bg-blue-500/90 text-sm">
           Add to Watchlist
         </Button>
       </div>
@@ -94,29 +96,33 @@ export default function VideoDetails({
 
       <div className="pt-10 pb-5 space-y-5">
         <p className="text-custom-gray-300 font-semibold">Similar Videos</p>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-14 w-full">
-          {thumnails.map((video, index) => (
-            <div key={index} className="text-custom-gray-300">
-              <div className="relative w-full h-24 sm:h-48">
-                <img
-                  src={`https://img.youtube.com/vi/${video.key}/0.jpg`}
-                  alt={video.name}
-                  className="w-full h-full rounded-md object-cover"
-                />
-                <div
-                  onClick={() =>
-                    handleThumbnailClick(
-                      index + (index >= currentVideoIndex ? 1 : 0)
-                    )
-                  }
-                  className="absolute start-2 bottom-2 flex items-center justify-center rounded-full shadow bg-custom-gray-400/15 p-1 w-10 h-10 cursor-pointer">
-                  <Play className="h-4 w-4 text-custom-gray-300 fill-custom-gray-300" />
+        <div className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-14">
+          {thumnails.length === 0 ? (
+            <p>No videos</p>
+          ) : (
+            thumnails.map((video, index) => (
+              <div key={index} className="text-custom-gray-300">
+                <div className="relative h-48">
+                  <img
+                    src={`https://img.youtube.com/vi/${video.key}/0.jpg`}
+                    alt={video.name}
+                    className="w-full h-full rounded-md object-cover"
+                  />
+                  <div
+                    onClick={() =>
+                      handleThumbnailClick(
+                        index + (index >= currentVideoIndex ? 1 : 0)
+                      )
+                    }
+                    className="absolute start-2 bottom-2 flex items-center justify-center rounded-full shadow bg-custom-gray-400/50 p-1 w-10 h-10 cursor-pointer">
+                    <Play className="h-4 w-4 text-custom-gray-300 fill-custom-gray-300" />
+                  </div>
                 </div>
-              </div>
 
-              <p className="pt-2 w-full truncate">{video.name}</p>
-            </div>
-          ))}
+                <p className="pt-2 w-full truncate">{video.name}</p>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </MaxWidthWrapper>

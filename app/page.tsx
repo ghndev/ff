@@ -9,12 +9,16 @@ import { getCachedLatestMovies, getCachedPopularTVShows } from '@/lib/tmdb'
 
 const VIDEOS = [
   {
+    id: '157336',
+    type: 'movie',
     backgroundSrc: '/interstella.jpg',
     posterSrc: '/interstella-poster.jpg',
     title: "'Interstellar: Journey Beyond the Stars",
     description: 'Embark on a breathtaking voyage through space and time'
   },
   {
+    id: '315635',
+    type: 'movie',
     backgroundSrc: '/spiderman-homecoming.jpg',
     posterSrc: '/spiderman-homecoming-poster.jpg',
     title: 'Spider-Man: Homecoming - A Hero Rises',
@@ -22,6 +26,8 @@ const VIDEOS = [
       'Watch Peter Parker swing into action in his first solo adventure'
   },
   {
+    id: '361743',
+    type: 'movie',
     backgroundSrc: '/top-gun-maverick.avif',
     posterSrc: '/top-gun-maverick-poster.jpg',
     title: 'Top Gun: Maverick - Soar to New Heights',
@@ -78,9 +84,11 @@ export default async function Home() {
                         <p className="text-xs">{video.description}</p>
                       </div>
 
-                      <div className="absolute end-2 bottom-2 flex items-center justify-center rounded-full shadow bg-custom-gray-400/15 p-1 w-10 h-10 cursor-pointer">
+                      <Link
+                        href={`/video/${video.id}?type=${video.type}`}
+                        className="absolute end-2 bottom-2 flex items-center justify-center rounded-full shadow bg-custom-gray-400/15 p-1 w-10 h-10 cursor-pointer">
                         <Play className="h-4 w-4 text-custom-gray-300 fill-custom-gray-300" />
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -104,7 +112,7 @@ export default async function Home() {
                 Fresh from the big screen, straight to you
               </p>
             </div>
-            <MovieCarousel movies={latestMovies} />
+            <MovieCarousel movies={latestMovies} type="movie" />
           </div>
 
           <div>
@@ -113,14 +121,14 @@ export default async function Home() {
                 href="/tv"
                 className="flex items-center gap-x-2 text-custom-gray-300">
                 <div className="ml-2 h-1 w-1 bg-blue-400 rounded-full" />
-                <p className="text-2xl">Latest TV Shows</p>
+                <p className="text-2xl">Popular TV Shows</p>
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <p className="text-[#797979] text-sm pl-2">
                 Tune in to the latest television sensations
               </p>
             </div>
-            <MovieCarousel movies={popularTVShows} />
+            <MovieCarousel movies={popularTVShows} type="tv" />
           </div>
         </MaxWidthWrapper>
       </section>
