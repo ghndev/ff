@@ -1,4 +1,5 @@
 import { unstable_cache as nextCache } from 'next/cache'
+import { notFound } from 'next/navigation'
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3'
 const TMDB_API_KEY = process.env.TMDB_API_KEY
@@ -9,7 +10,9 @@ async function getLatestMovies(count: number) {
     { next: { revalidate: 3600 } }
   )
 
-  if (!res.ok) throw new Error('Failed to fetch top picks')
+  if (!res.ok) {
+    return null
+  }
 
   const data = await res.json()
   return data.results.slice(0, count)
@@ -30,7 +33,9 @@ async function getPopularTVShows(count: number) {
     { next: { revalidate: 3600 } }
   )
 
-  if (!res.ok) throw new Error('Failed to fetch popular TV shows')
+  if (!res.ok) {
+    return null
+  }
 
   const data = await res.json()
   return data.results.slice(0, count)
@@ -51,7 +56,9 @@ async function getDetails(id: number, type: string) {
     { next: { revalidate: 3600 } }
   )
 
-  if (!res.ok) throw new Error('Failed to fetch details')
+  if (!res.ok) {
+    notFound()
+  }
 
   const data = await res.json()
   return data

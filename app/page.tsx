@@ -125,7 +125,7 @@ export default async function Home() {
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <p className="text-[#797979] text-sm pl-2">
-                Tune in to the latest television sensations
+                Tune in to the popular television sensations
               </p>
             </div>
             <MovieCarousel movies={popularTVShows} type="tv" />

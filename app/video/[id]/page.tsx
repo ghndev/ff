@@ -1,5 +1,6 @@
 import VideoDetails from '@/components/video-details'
 import { getCachedDetails } from '@/lib/tmdb'
+import { notFound } from 'next/navigation'
 
 export default async function Page({
   params,
@@ -9,13 +10,18 @@ export default async function Page({
   searchParams: { type: string }
 }) {
   const { type } = searchParams
+
+  if (type !== 'movie' && type !== 'tv') {
+    notFound()
+  }
+
   const data = await getCachedDetails(params.id, type)
 
   const title = type === 'movie' ? data.original_title : data.name
   const releaseDate = type === 'movie' ? data.release_date : data.first_air_date
 
   return (
-    <div className="bg-[#1A1A1A]">
+    <div className="bg-[#1A1A1A] min-h-[calc(100vh-4rem)]">
       <VideoDetails
         title={title}
         overview={data.overview}

@@ -79,17 +79,21 @@ export default function VideoDetails({
         </Button>
       </div>
 
-      <p className="mt-5 pl-0.5 font-semibold">Movie Video</p>
+      <p className="mt-5 pl-0.5 font-semibold">{type.toUpperCase()} Video</p>
 
       <div className="md:grid md:grid-cols-4 md:space-x-5 md:space-y-0 space-y-5 h-fit pt-3">
         <div className="col-span-3">
-          <iframe
-            key={currentVideoIndex}
-            className="w-full h-[30rem] rounded-md"
-            src={`https://www.youtube.com/embed/${currentVideo.key}`}
-            title={currentVideo.name}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen></iframe>
+          {videos.length === 0 ? (
+            <p>No video</p>
+          ) : (
+            <iframe
+              key={currentVideoIndex}
+              className="w-full h-[30rem] rounded-md"
+              src={`https://www.youtube.com/embed/${currentVideo?.key}`}
+              title={currentVideo?.name}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen></iframe>
+          )}
         </div>
         <div className="text-custom-gray-300">{overview}</div>
       </div>
