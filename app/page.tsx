@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { ArrowRight, ChevronRight, Play } from 'lucide-react'
 import Link from 'next/link'
 import MovieCarousel from '@/components/movie-carousel'
-import { getCachedLatestMovies, getCachedPopularTVShows } from './actions'
+import { getCachedLatestMovies, getCachedPopularTVShows } from '@/lib/tmdb'
 
 const VIDEOS = [
   {
@@ -78,10 +78,8 @@ export default async function Home() {
                         <p className="text-xs">{video.description}</p>
                       </div>
 
-                      <div className="absolute end-2 bottom-2">
-                        <div className="flex items-center justify-center rounded-full shadow bg-custom-gray-400/15 p-1 w-10 h-10 cursor-pointer">
-                          <Play className="h-4 w-4 text-custom-gray-300 fill-custom-gray-300" />
-                        </div>
+                      <div className="absolute end-2 bottom-2 flex items-center justify-center rounded-full shadow bg-custom-gray-400/15 p-1 w-10 h-10 cursor-pointer">
+                        <Play className="h-4 w-4 text-custom-gray-300 fill-custom-gray-300" />
                       </div>
                     </div>
                   </div>
