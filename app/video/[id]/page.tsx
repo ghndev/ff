@@ -7,9 +7,9 @@ export default async function Page({
   searchParams
 }: {
   params: { id: number }
-  searchParams: { type: string }
+  searchParams: { type: string; index: number }
 }) {
-  const { type } = searchParams
+  const { type, index } = searchParams
 
   if (type !== 'movie' && type !== 'tv') {
     notFound()
@@ -27,6 +27,7 @@ export default async function Page({
         overview={data.overview}
         year={releaseDate ? releaseDate.slice(0, 4) : 'NA'}
         type={type}
+        videoIndex={index}
         videos={data.videos?.results}
       />
     </div>

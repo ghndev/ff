@@ -1,10 +1,10 @@
 'use client'
 
-import { Play, X } from 'lucide-react'
+import { ArrowLeft, Play } from 'lucide-react'
 import MaxWidthWrapper from './max-width-wrapper'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from './ui/button'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 interface Video {
   id: string
@@ -19,6 +19,7 @@ interface VideoDetailsProps {
   overview: string
   year: string
   type: string
+  videoIndex: number
   videos: Video[]
 }
 
@@ -27,11 +28,12 @@ export default function VideoDetails({
   overview,
   year,
   type,
+  videoIndex,
   videos
 }: VideoDetailsProps) {
   const router = useRouter()
   const videoPlayerRef = useRef<HTMLDivElement>(null)
-  const searchParams = useSearchParams()
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(videoIndex || 0)
 
   const sortedVideos = [...videos].sort((a, b) => {
     if (a.type === 'Trailer') return -1
@@ -39,32 +41,29 @@ export default function VideoDetails({
     return 0
   })
 
-  const initialVideoIndex = parseInt(searchParams.get('video') || '0', 10)
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(initialVideoIndex)
-
-  const onCloseClick = () => {
-    router.back()
-  }
+  const currentVideo = sortedVideos[currentVideoIndex]
+  const thumbnails = sortedVideos.filter(
+    (_, index) => index != currentVideoIndex
+  )
 
   const handleThumbnailClick = useCallback(
     (index: number) => {
       setCurrentVideoIndex(index)
-      router.push(`?type=${type}&video=${index}`)
+      router.push(`?type=${type}&index=${index}`)
       videoPlayerRef.current?.scrollIntoView({ behavior: 'smooth' })
     },
     [router, type]
   )
 
-  const currentVideo = sortedVideos[currentVideoIndex]
-  const thumnails = sortedVideos.filter(
-    (_, index) => index !== currentVideoIndex
-  )
+  const onCloseClick = () => {
+    router.back()
+  }
 
   return (
     <MaxWidthWrapper className="py-5 text-custom-gray-300">
       <div className="flex justify-between" ref={videoPlayerRef}>
         <div className="flex items-center">
-          <X
+          <ArrowLeft
             onClick={onCloseClick}
             className="h-5 w-5 text-custom-gray-300 mr-5 cursor-pointer"
           />
@@ -101,10 +100,10 @@ export default function VideoDetails({
       <div className="pt-10 pb-5 space-y-5">
         <p className="text-custom-gray-300 font-semibold">Similar Videos</p>
         <div className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-14">
-          {thumnails.length === 0 ? (
+          {thumbnails.length === 0 ? (
             <p>No videos</p>
           ) : (
-            thumnails.map((video, index) => (
+            thumbnails.map((video, index) => (
               <div key={index} className="text-custom-gray-300">
                 <div className="relative h-48">
                   <img
