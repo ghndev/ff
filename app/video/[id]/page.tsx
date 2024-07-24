@@ -25,7 +25,7 @@ export default async function Page({
       <VideoDetails
         title={title}
         overview={data.overview}
-        year={releaseDate ? releaseDate.slice(0, 4) : 'NA'}
+        year={releaseDate.slice(0, 4)}
         type={type}
         videoIndex={index}
         videos={data.videos?.results}

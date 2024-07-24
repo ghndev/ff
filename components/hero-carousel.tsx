@@ -53,7 +53,7 @@ export default function HeroCarousel() {
               alt="background"
               className="rounded-md w-[46.875rem] h-80 md:h-[30rem] object-cover [mask:linear-gradient(to_top,_transparent_0%,_#0E0E0E_30%)] select-none"
             />
-            <Link href={`/title/${movie.id}`}>
+            <Link href={`/movie/${movie.id}`}>
               <Poster
                 imgSrc={movie.posterSrc}
                 className="absolute -bottom-14 start-7 md:-bottom-[5.5rem] select-none w-32 h-48 md:w-48 md:h-[18rem]"

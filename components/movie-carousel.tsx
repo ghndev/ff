@@ -36,14 +36,14 @@ export default function MovieCarousel({ movies, type }: MovieCarouselProps) {
             key={index}
             className="basis-1/2 md:basis-1/4 lg:basis-1/6">
             <div className="flex flex-col bg-custom-gray-400/5 aspect-square rounded-md items-center justify-center p-2.5">
-              <Link href={`/title/${movie.id}`}>
+              <Link href={`/${type}/${movie.id}`}>
                 <Poster
                   imgSrc={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                   className="w-full h-[15rem] sm:h-[30rem] md:h-[14.25rem] "
                 />
               </Link>
               <Link
-                href={`/title/${movie.id}`}
+                href={`/${type}/${movie.id}`}
                 className="text-custom-gray-300 w-full truncate pt-3 hover:underline">
                 {movie.title || movie.original_name || 'Untitled'}
               </Link>
