@@ -2,15 +2,25 @@ import MaxWidthWrapper from '@/components/max-width-wrapper'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { getCachedDetails, getCredits } from '@/lib/tmdb'
 import { cn, formatRuntime } from '@/lib/utils'
-import { Play, Star } from 'lucide-react'
+import { Bookmark, Divide, Play, Star } from 'lucide-react'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
 export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params
 
   const movie = await getCachedDetails(id, 'movie')
   const credits = await getCredits(id, 'movie')
+
   console.log(credits)
+
+  const directors = credits.crew.filter(
+    ({ job }: { job: string }) => job === 'Director'
+  )
+
+  const writers = credits.crew.filter(
+    ({ job }: { job: string }) => job === 'Writer'
+  )
 
   return (
     <MaxWidthWrapper className="py-5 text-custom-gray-300">
@@ -23,24 +33,33 @@ export default async function Page({ params }: { params: { id: number } }) {
             <p>{formatRuntime(movie.runtime)}</p>
           </div>
           <div className="flex space-x-2">
-            <Button className="bg-custom-gray-300/10 hover:bg-custom-gray-300/15 text-custom-gray-300">
+            <Button
+              size="sm"
+              className="bg-custom-gray-300/10 hover:bg-custom-gray-300/15 text-custom-gray-300">
               <Star className="h-3.5 w-3.5 mr-2 text-custom-gray-300" /> Rate
             </Button>
-            <Button className="bg-custom-gray-300/15 hover:bg-custom-gray-300/20 text-custom-gray-300">
+            <Button
+              size="sm"
+              className="bg-custom-gray-300/15 hover:bg-custom-gray-300/20 text-custom-gray-300">
               <Star className="h-3.5 w-3.5 mr-2 text-blue-500 fill-blue-500" />{' '}
               8.9<span className="text-custom-gray-400/60">/10 (200K)</span>
             </Button>
+            <Button
+              size="sm"
+              className="hidden sm:flex bg-blue-500 hover:bg-blue-500/90">
+              <Bookmark className="h-5 w-5 mr-2 fill-white" /> Add to Watchlist
+            </Button>
           </div>
         </div>
-        <div className="flex flex-col md:grid grid-cols-4 w-full space-x-3 pt-2">
-          <div>
+        <div className="flex flex-col items-center gap-2.5 md:grid grid-cols-4 w-full  pt-2">
+          <div className="w-full hidden md:block">
             <img
-              className="h-[26rem] rounded-md object-cover"
+              className="h-[26rem] rounded-md object-cover w-full"
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               alt="poster"
             />
           </div>
-          <div className="col-span-3 relative">
+          <div className="col-span-3 relative w-full">
             <img
               className="h-[26rem] rounded-md w-full object-cover"
               src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
@@ -57,28 +76,70 @@ export default async function Page({ params }: { params: { id: number } }) {
                 Trailer
               </div>
             </Link>
-            {/* <Button className="absolute -bottom-14 end-0 bg-blue-500 hover:bg-blue-500/90 rounded-lg">
-              52K &#183; Add to Watchlist
-            </Button> */}
           </div>
         </div>
-        <div className="h-12 pt-5 text-[#797979]">
-          <div className="flex items-center pb-2">
-            <p className="text-sm text-start w-20 font-semibold">Genre</p>
-            <div className="flex gap-2">
+        <div className="pt-5 text-[#797979]">
+          <Button
+            size="sm"
+            className="sm:hidden bg-blue-500 hover:bg-blue-500/90">
+            <Bookmark className="h-5 w-5 mr-2 fill-white" /> Add to Watchlist
+          </Button>
+          <div className="grid grid-cols-[60px_1fr] sm:grid-cols-[100px_1fr] gap-4 items-center pt-5 sm:pt-0">
+            <p className="font-semibold">Genre</p>
+            <div className="flex gap-2 flex-wrap">
               {movie.genres.map((genre: { id: number; name: string }) => (
                 <div
                   key={genre.id}
-                  className="py-2 bg-custom-gray-400/15 text-custom-gray-300 rounded-3xl px-4 text-sm">
+                  className="py-1.5 px-2 sm:py-2 sm:px-4 bg-custom-gray-400/15 text-custom-gray-300 rounded-3xl text-sm">
                   {genre.name}
                 </div>
               ))}
             </div>
+            <p className="font-semibold">Director</p>
+            <p className="text-sm text-blue-400">{directors[0].name}</p>
+            <p className="font-semibold">Writers</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              {writers && writers.length > 0 ? (
+                writers.map((writer: { name: string }, index: number) => (
+                  <Fragment key={index}>
+                    {index != 0 && (
+                      <div
+                        aria-hidden="true"
+                        className="size-[3px] rounded-full bg-muted-foreground"></div>
+                    )}
+
+                    <p className="text-sm text-blue-400" key={index}>
+                      {writer.name}
+                    </p>
+                  </Fragment>
+                ))
+              ) : (
+                <p className="text-sm text-custom-gray-300">N/A</p>
+              )}
+            </div>
+            <p className="font-semibold">Stars</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              {credits.cast && credits.cast.length > 0 ? (
+                credits.cast
+                  .slice(0, 4)
+                  .map((cast: { name: string }, index: number) => (
+                    <Fragment key={index}>
+                      {index != 0 && (
+                        <div
+                          aria-hidden="true"
+                          className="size-[3px] rounded-full bg-muted-foreground"></div>
+                      )}
+
+                      <p className="text-sm text-blue-400" key={index}>
+                        {cast.name}
+                      </p>
+                    </Fragment>
+                  ))
+              ) : (
+                <p className="text-sm text-custom-gray-300">N/A</p>
+              )}
+            </div>
           </div>
-          {/* <div className="flex items-center pb-2">
-            <p className="text-sm text-start w-20 font-semibold">Director</p>
-            <p className="text-custom-gray-300">{movie.overview}</p>
-          </div> */}
         </div>
       </section>
     </MaxWidthWrapper>

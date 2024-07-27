@@ -73,11 +73,14 @@ export default async function Home() {
                     <div className="absolute inset-0 bg-black/80"></div>
                   </div>
                   <div className="relative z-10 flex items-center h-full py-4 px-3">
-                    <img
-                      src={video.posterSrc}
-                      alt="poster"
-                      className="h-full w-16 object-cover rounded"
-                    />
+                    <Link href={`/movie/${video.id}`} className="w-24 h-full">
+                      <img
+                        src={video.posterSrc}
+                        alt="poster"
+                        className="h-full w-full object-cover rounded"
+                      />
+                    </Link>
+
                     <div className="pl-3 text-custom-gray-300 h-full w-full">
                       <div className="flex flex-col justify-start">
                         <p className="text-sm">{video.title}</p>
