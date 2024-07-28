@@ -68,7 +68,8 @@ export default function VideoDetails({
             className="h-5 w-5 text-custom-gray-300 mr-5 cursor-pointer"
           />
           <p className="text-xl">
-            {title} <span className="text-xs text-[#797979]">({year})</span>
+            {title}{' '}
+            <span className="text-xs text-custom-gray-500">({year})</span>
           </p>
         </div>
         <Button

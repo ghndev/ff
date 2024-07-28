@@ -1,8 +1,9 @@
 import MaxWidthWrapper from '@/components/max-width-wrapper'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { getCachedDetails, getCredits } from '@/lib/tmdb'
+import { Separator } from '@/components/ui/separator'
+import { getCachedCredits, getCachedDetails } from '@/lib/tmdb'
 import { cn, formatRuntime } from '@/lib/utils'
-import { Bookmark, Divide, Play, Star } from 'lucide-react'
+import { Bookmark, ChevronRight, Play, Star } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'
 
@@ -10,9 +11,7 @@ export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params
 
   const movie = await getCachedDetails(id, 'movie')
-  const credits = await getCredits(id, 'movie')
-
-  console.log(credits)
+  const credits = await getCachedCredits(id, 'movie')
 
   const directors = credits.crew.filter(
     ({ job }: { job: string }) => job === 'Director'
@@ -22,14 +21,16 @@ export default async function Page({ params }: { params: { id: number } }) {
     ({ job }: { job: string }) => job === 'Writer'
   )
 
+  console.log(credits.cast)
+
   return (
     <MaxWidthWrapper className="py-5 text-custom-gray-300">
       <section>
         <h1 className="text-3xl">{movie.original_title}</h1>
         <div className="flex justify-between py-1">
-          <div className="flex items-center space-x-2 text-[#797979] text-sm">
+          <div className="flex items-center space-x-2 text-custom-gray-500 text-sm">
             <p>{movie.release_date.slice(0, 4)}</p>
-            <div className="w-[3px] h-[3px] rounded-full bg-[#797979]" />
+            <div className="w-[3px] h-[3px] rounded-full bg-custom-gray-500" />
             <p>{formatRuntime(movie.runtime)}</p>
           </div>
           <div className="flex space-x-2">
@@ -51,7 +52,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2.5 md:grid grid-cols-4 w-full  pt-2">
+        <div className="grid grid-cols-1 gap-2.5 md:grid-cols-4 w-full pt-2">
           <div className="w-full hidden md:block">
             <img
               className="h-[26rem] rounded-md object-cover w-full"
@@ -78,7 +79,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             </Link>
           </div>
         </div>
-        <div className="pt-5 text-[#797979]">
+        <div className="pt-5 text-custom-gray-500">
           <Button
             size="sm"
             className="sm:hidden bg-blue-500 hover:bg-blue-500/90">
@@ -99,7 +100,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             <p className="text-sm text-blue-400">{directors[0].name}</p>
             <p className="font-semibold">Writers</p>
             <div className="flex items-center gap-2 flex-wrap">
-              {writers && writers.length > 0 ? (
+              {writers.length > 0 ? (
                 writers.map((writer: { name: string }, index: number) => (
                   <Fragment key={index}>
                     {index != 0 && (
@@ -119,7 +120,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             </div>
             <p className="font-semibold">Stars</p>
             <div className="flex items-center gap-2 flex-wrap">
-              {credits.cast && credits.cast.length > 0 ? (
+              {credits.cast.length > 0 ? (
                 credits.cast
                   .slice(0, 4)
                   .map((cast: { name: string }, index: number) => (
@@ -140,6 +141,46 @@ export default async function Page({ params }: { params: { id: number } }) {
               )}
             </div>
           </div>
+        </div>
+      </section>
+      <Separator className="my-12 bg-custom-gray-400/15" />
+      <section>
+        <div className="flex justify-between pb-5">
+          <div className="flex gap-2.5 items-center">
+            <div className="h-1 w-1 bg-blue-500 rounded-full" />
+            <p className="text-2xl text-custom-gray-300">Cast</p>
+          </div>
+          <Link
+            href={`/cast/${id}?type=movie`}
+            className="flex items-center gap-2 text-custom-gray-300 text-sm">
+            See all <ChevronRight className="h-5 w-5" />
+          </Link>
+        </div>
+        <div className="grid  grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-7 w-full">
+          {credits.cast
+            .slice(0, 6)
+            .map(
+              (
+                cast: { profile_path: string; name: string; character: string },
+                index: number
+              ) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center justify-center">
+                  <img
+                    className="h-40 w-40 rounded-2xl object-cover"
+                    src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`}
+                    alt="actor"
+                  />
+                  <p className="text-custom-gray-300 pt-3 text-xs w-full">
+                    {cast.name}
+                  </p>
+                  <p className="text-custom-gray-500 pt-1 text-xs w-full">
+                    {cast.character}
+                  </p>
+                </div>
+              )
+            )}
         </div>
       </section>
     </MaxWidthWrapper>

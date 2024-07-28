@@ -73,15 +73,26 @@ export const getCachedDetails = nextCache(
   }
 )
 
-export async function getCredits(id: number, type: string) {
+async function getCredits(id: number, type: string) {
   const res = await fetch(
     `${TMDB_BASE_URL}/${type}/${id}/credits?api_key=${TMDB_API_KEY}&language=en-US`,
     { next: { revalidate: 3600 } }
   )
 
-  if (!res.ok) throw new Error('Failed to fetch credits')
+  if (!res.ok) {
+    notFound()
+  }
 
   const data = await res.json()
 
   return data
 }
+
+export const getCachedCredits = nextCache(
+  (id: number, type: string) => getCredits(id, type),
+  ['movie-credits'],
+  {
+    tags: ['movie-credits'],
+    revalidate: 3600
+  }
+)

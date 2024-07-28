@@ -111,7 +111,7 @@ export default async function Home() {
                 <p className="text-2xl">Latest Movies</p>
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <p className="text-[#797979] text-sm pl-2">
+              <p className="text-custom-gray-500 text-sm pl-2">
                 Fresh from the big screen, straight to you
               </p>
             </div>
@@ -127,7 +127,7 @@ export default async function Home() {
                 <p className="text-2xl">Popular TV Shows</p>
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <p className="text-[#797979] text-sm pl-2">
+              <p className="text-custom-gray-500 text-sm pl-2">
                 Tune in to the popular television sensations
               </p>
             </div>

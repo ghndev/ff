@@ -26,6 +26,7 @@ const config = {
         foreground: 'hsl(var(--foreground))',
         'custom-gray-300': '#C3C3C3',
         'custom-gray-400': '#A3A3A3',
+        'custom-gray-500': '#797979',
         shadow: '#1A1A1A',
         dark: '#080808',
         primary: {
