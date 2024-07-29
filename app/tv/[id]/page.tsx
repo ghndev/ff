@@ -10,26 +10,26 @@ import { Fragment } from 'react'
 export default async function Page({ params }: { params: { id: number } }) {
   const { id } = params
 
-  const movie = await getCachedDetails(id, 'movie')
-  const credits = await getCachedCredits(id, 'movie')
+  const tv = await getCachedDetails(id, 'tv')
+  const credits = await getCachedCredits(id, 'tv')
 
   const directors = credits.crew.filter(
-    ({ job }: { job: string }) => job === 'Director'
+    ({ job }: { job: string }) => job === 'Executive Producer'
   )
 
   const writers = credits.crew.filter(
-    ({ job }: { job: string }) => job === 'Writer'
+    ({ job }: { job: string }) => job === 'Novel'
   )
 
   return (
     <MaxWidthWrapper className="py-5 text-custom-gray-300">
       <section>
-        <h1 className="text-3xl">{movie.original_title}</h1>
+        <h1 className="text-3xl">{tv.name}</h1>
         <div className="flex justify-between py-1">
           <div className="flex items-center space-x-2 text-custom-gray-500 text-sm">
-            <p>{movie.release_date.slice(0, 4)}</p>
+            <p>{tv.last_air_date.slice(0, 4)}</p>
             <div className="w-[3px] h-[3px] rounded-full bg-custom-gray-500" />
-            <p>{formatRuntime(movie.runtime)}</p>
+            <p>Seasons {tv.number_of_seasons}</p>
           </div>
           <div className="flex space-x-2">
             <Button
@@ -54,14 +54,14 @@ export default async function Page({ params }: { params: { id: number } }) {
           <div className="w-full hidden md:block">
             <img
               className="h-[26rem] rounded-md object-cover w-full"
-              src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original${tv.poster_path}`}
               alt="poster"
             />
           </div>
           <div className="col-span-3 relative w-full">
             <img
               className="h-[26rem] rounded-md w-full object-cover"
-              src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/original${tv.backdrop_path}`}
               alt="poster"
             />
             <Link
@@ -69,7 +69,7 @@ export default async function Page({ params }: { params: { id: number } }) {
                 buttonVariants(),
                 'absolute bg-custom-gray-400/50 hover:bg-custom-gray-400/70 rounded-3xl start-5 bottom-5 text-white'
               )}
-              href={`/video/${movie.id}?type=movie`}>
+              href={`/video/${tv.id}?type=tv`}>
               <div className="flex items-center">
                 <Play className="h-3 w-3 fill-white mr-3" />
                 Trailer
@@ -86,7 +86,7 @@ export default async function Page({ params }: { params: { id: number } }) {
           <div className="grid grid-cols-[60px_1fr] sm:grid-cols-[100px_1fr] gap-4 items-center pt-5 sm:pt-0">
             <p className="font-semibold">Genre</p>
             <div className="flex gap-2 flex-wrap">
-              {movie.genres.map((genre: { id: number; name: string }) => (
+              {tv.genres.map((genre: { id: number; name: string }) => (
                 <div
                   key={genre.id}
                   className="py-1.5 px-2 sm:py-2 sm:px-4 bg-custom-gray-400/15 text-custom-gray-300 rounded-3xl text-sm">
@@ -94,8 +94,26 @@ export default async function Page({ params }: { params: { id: number } }) {
                 </div>
               ))}
             </div>
-            <p className="font-semibold">Director</p>
-            <p className="text-sm text-blue-400">{directors[0].name}</p>
+            <p className="font-semibold">Directors</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              {directors.length > 0 ? (
+                directors.map((director: { name: string }, index: number) => (
+                  <Fragment key={index}>
+                    {index != 0 && (
+                      <div
+                        aria-hidden="true"
+                        className="size-[3px] rounded-full bg-muted-foreground"></div>
+                    )}
+
+                    <p className="text-sm text-blue-400" key={index}>
+                      {director.name}
+                    </p>
+                  </Fragment>
+                ))
+              ) : (
+                <p className="text-sm text-custom-gray-300">N/A</p>
+              )}
+            </div>
             <p className="font-semibold">Writers</p>
             <div className="flex items-center gap-2 flex-wrap">
               {writers.length > 0 ? (
@@ -149,12 +167,15 @@ export default async function Page({ params }: { params: { id: number } }) {
             <p className="text-2xl text-custom-gray-300">Cast</p>
           </div>
           <Link
-            href={`/cast/${id}?type=movie`}
-            className="flex items-center gap-2 text-custom-gray-300 text-sm">
+            href={`/cast/${id}?type=tv`}
+            className={cn(
+              'flex items-center gap-2 text-custom-gray-300 text-sm',
+              { hidden: credits.cast.length < 7 }
+            )}>
             See all <ChevronRight className="h-5 w-5" />
           </Link>
         </div>
-        <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-7 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 w-full">
           {credits.cast
             .slice(0, 6)
             .map(
@@ -164,7 +185,7 @@ export default async function Page({ params }: { params: { id: number } }) {
               ) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center w-40">
+                  className="flex flex-col items-center justify-center w-full">
                   <img
                     className="h-40 rounded-2xl object-cover w-full"
                     src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`}
