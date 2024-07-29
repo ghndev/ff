@@ -151,7 +151,7 @@ export default async function Page({ params }: { params: { id: number } }) {
           <Link
             href={`/cast/${id}?type=movie`}
             className="flex items-center gap-2 text-custom-gray-300 text-sm">
-            See all <ChevronRight className="h-5 w-5" />
+            See all cast & crew <ChevronRight className="h-5 w-5" />
           </Link>
         </div>
         <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-7 w-full">
@@ -164,7 +164,7 @@ export default async function Page({ params }: { params: { id: number } }) {
               ) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center w-40">
+                  className="flex flex-col items-center justify-center w-full">
                   <img
                     className="h-40 rounded-2xl object-cover w-full"
                     src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`}

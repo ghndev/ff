@@ -168,11 +168,8 @@ export default async function Page({ params }: { params: { id: number } }) {
           </div>
           <Link
             href={`/cast/${id}?type=tv`}
-            className={cn(
-              'flex items-center gap-2 text-custom-gray-300 text-sm',
-              { hidden: credits.cast.length < 7 }
-            )}>
-            See all <ChevronRight className="h-5 w-5" />
+            className="flex items-center gap-2 text-custom-gray-300 text-sm">
+            See all cast & crew <ChevronRight className="h-5 w-5" />
           </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 w-full">
