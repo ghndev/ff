@@ -23,33 +23,13 @@ export default async function Page({
 
   const credits = await getCachedCredits(id, type)
 
-  const jobSet: Set<string> = new Set(
-    credits.crew.map((person: { job: string }) => person.job)
-  )
-  const categories = ['Cast', ...Array.from(jobSet)].sort()
-  const groupedCredits = {
-    cast: credits.cast,
-    ...Object.fromEntries(
-      categories
-        .slice(1)
-        .map((category) => [
-          category,
-          credits.crew.filter(
-            (person: { job: string }) => person.job === category
-          )
-        ])
-    )
-  }
-  console.log('------------')
-  console.log(categories)
-
   return (
     <div className="bg-[#1A1A1A] min-h-[calc(100vh-4rem)]">
       <CreditDetails
         type={type}
         title={title}
         year={releaseDate.slice(0, 4)}
-        categories={categories}
+        credits={credits}
       />
     </div>
   )
