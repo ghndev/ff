@@ -149,7 +149,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             <p className="text-2xl text-custom-gray-300">Cast</p>
           </div>
           <Link
-            href={`/cast/${id}?type=movie`}
+            href={`/movie/${id}/credits`}
             className="flex items-center gap-2 text-custom-gray-300 text-sm">
             See all cast & crew <ChevronRight className="h-5 w-5" />
           </Link>

@@ -2,7 +2,7 @@ import MaxWidthWrapper from '@/components/max-width-wrapper'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { getCachedCredits, getCachedDetails } from '@/lib/tmdb'
-import { cn, formatRuntime } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { Bookmark, ChevronRight, Play, Star } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -167,7 +167,7 @@ export default async function Page({ params }: { params: { id: number } }) {
             <p className="text-2xl text-custom-gray-300">Cast</p>
           </div>
           <Link
-            href={`/cast/${id}?type=tv`}
+            href={`/tv/${id}/credits`}
             className="flex items-center gap-2 text-custom-gray-300 text-sm">
             See all cast & crew <ChevronRight className="h-5 w-5" />
           </Link>

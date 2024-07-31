@@ -49,8 +49,8 @@ export default async function Home() {
           <div className="flex flex-col mt-2 md:mt-0 md:pl-5 lg:pl-10">
             <div className="flex justify-between">
               <div className="flex items-center gap-x-2 text-white text-sm pl-3">
-                <div className="h-1.5 w-1.5 bg-blue-400 rounded-full" />{' '}
-                Featured Videos
+                <div className="h-1 w-1 bg-blue-400 rounded-full" /> Featured
+                Videos
               </div>
               <Link
                 href="/trailers"
